@@ -1,4 +1,4 @@
-.container {
+.container-doctor {
     padding-top: 6rem;
     padding-bottom: 6rem;
     padding-right: 4rem;
@@ -6,12 +6,12 @@
     background-color: #1990ea;
 }
 
-.content {
+.content-doctor {
     background-color: #ffffff;
     height: 44rem;
 }
 
-.logo-image {
+.logo-image-doctor {
     width: 5.5rem;
     height: auto;
     position: absolute;
@@ -19,7 +19,7 @@
     left: 6rem;
 }
 
-.container-image {
+.container-image-doctor {
     width: 45rem;
     height: 44rem;
     position: absolute;
@@ -27,14 +27,14 @@
     right: 4rem;
 }
 
-.headings {
+.headings-doctor {
     text-align: left;
     position: absolute;
     top: 16rem;
     left: 8rem;
 }
 
-.form-container {
+.form-container-doctor {
     width: 50%;
     padding: 4rem;
     position: absolute;
