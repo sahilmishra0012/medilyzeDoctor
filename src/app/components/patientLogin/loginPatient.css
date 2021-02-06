@@ -1,4 +1,4 @@
-.container {
+.container-patient {
     padding-top: 6rem;
     padding-bottom: 6rem;
     padding-right: 5rem;
@@ -18,12 +18,12 @@
     margin-left: 0.5rem;
 }
 
-.content {
+.content-patient {
     height: 48rem;
     border-radius: 2rem;
 }
 
-.logo-image {
+.logo-image-patient {
     width: 5.5rem;
     height: auto;
     position: absolute;
@@ -31,7 +31,7 @@
     left: 9rem;
 }
 
-.container-image {
+.container-image-patient {
     width: 71rem;
     height: 44rem;
     position: absolute;
@@ -39,14 +39,14 @@
     right: 6rem;
 }
 
-.headings {
+.headings-patient {
     text-align: left;
     position: absolute;
     top: 18rem;
     left: 9rem;
 }
 
-.form-container {
+.form-container-patient {
     width: 50%;
     padding: 4rem;
     position: absolute;
