@@ -73,7 +73,7 @@ export default function LoginPatient() {
                                 name="email"
                                 autoComplete="email"
                                 color="primary"
-                                ref={phoneRef}
+                                inputRef={phoneRef}
                             />
                         </Grid>
                         <Grid item xs={9}>
@@ -86,7 +86,7 @@ export default function LoginPatient() {
                                 type="number"
                                 id="password"
                                 color="primary"
-                                ref={otpRef}
+                                inputRef={otpRef}
                             />
                         </Grid>
                         <Grid container xs={9}>

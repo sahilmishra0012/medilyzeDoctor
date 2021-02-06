@@ -71,7 +71,7 @@ export default function LoginDoctor() {
                                 name="email"
                                 autoComplete="email"
                                 color="secondary"
-                                ref={emailRef}
+                                inputRef={emailRef}
                             />
                         </Grid>
                         <Grid item xs={9}>
@@ -85,7 +85,7 @@ export default function LoginDoctor() {
                                 id="password"
                                 autoComplete="current-password"
                                 color="secondary"
-                                ref={passwordRef}
+                                inputRef={passwordRef}
                             />
                         </Grid>
                         <Grid container xs={9}>
