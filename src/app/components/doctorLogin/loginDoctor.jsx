@@ -30,7 +30,7 @@ export default function LoginDoctor() {
             setError("")
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
-            history.push("/patientLogin")
+            history.push("/patientSearch")
         } catch {
             setError("Failed to log in")
         }
@@ -113,14 +113,6 @@ export default function LoginDoctor() {
                         >
                             Sign In
                         </Button>
-                    </Grid>
-                    <Grid item xs={9} className="link-to-signup">
-                        <Typography>
-                            Don't have an account?
-                            <Link to="/signup">
-                                Create one here
-                            </Link>
-                        </Typography>
                     </Grid>
                 </form>
                 <img src={containerImage} alt="loginPage" className="container-image-doctor" />

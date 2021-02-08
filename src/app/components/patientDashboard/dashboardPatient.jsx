@@ -16,12 +16,12 @@ export default function DashboardPatient() {
     const { currentUser, logout } = useAuth()
     const history = useHistory()
 
-    async function handleLogout() {
+    async function handleExit() {
         setError("")
 
         try {
             await logout()
-            history.push("/patientLogin")
+            history.push("/patientSearch")
         } catch {
             setError("Failed to log out")
         }
@@ -54,7 +54,7 @@ export default function DashboardPatient() {
                     Doctor's Name
                 </Typography>
                 <Typography>
-                    <Link to="/logout">Logout</Link>
+                    <Link to="/patientSearch" onClick={handleExit}>Exit</Link>
                 </Typography>
             </div>
             <div className="content">
