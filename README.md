@@ -10,3 +10,10 @@ For contributors
 
 3. Before pushing changes to dev, always take a pull from remote dev and resolve conflicts beforehand
     git pull origin dev
+
+To run the app
+
+1. get the .env file contents
+
+2. Start the development server
+    npm start
