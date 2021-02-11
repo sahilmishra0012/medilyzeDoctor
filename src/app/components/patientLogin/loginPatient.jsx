@@ -10,6 +10,7 @@ import Alert from '@material-ui/lab/Alert';
 import logo from "../../../images/logo.png"
 import containerImage from "../../../images/7882.png"
 import { useAuth } from "../../contexts/AuthContext";
+import {fetchPatientData} from "../../contexts/FirestoreContext"
 import { useHistory } from "react-router-dom";
 
 export default function LoginPatient() {
@@ -25,9 +26,10 @@ export default function LoginPatient() {
         try {
             setError("")
             setLoading(true)
-            await login(uidRef.current.value)
+            await fetchPatientData(uidRef.current.value)
             history.push("/patientProfile")
-        } catch {
+        } catch (err){
+            console.log(err)
             setError("Failed to log in")
         }
     
