@@ -10,7 +10,7 @@
 .navbar-right {
     position: absolute;
     top: 6rem;
-    right: 7rem;
+    right: 5rem;
     display: inline-flex;
     color: white;
 }
@@ -22,8 +22,21 @@
 
 .navbar-left {
     z-index: 10;
+    display: flex;
     position: absolute;
-    top: 3rem;
+    top: 2rem;
+    left: 3rem;
+}
+
+.navbar-image {
+    height: 8rem;
+    display: inline-flex;
+}
+
+.navbar-headings {
+    display: block;
+    margin-top: 1rem;
+    text-align: left;
 }
 
 .content-dashboard {
@@ -33,14 +46,18 @@
     color: #555555;
 }
 
-.personal-details {
-    height: 10rem;
+.patient-image{
+    width: 8rem;
+    height: 8rem;
+    display: inline-block;
+    border-radius: 50%;
+    position: absolute;
+    top: 13rem;
+    left: 7rem;
 }
 
-.greeting {
-    position: absolute;
-    top: 15rem;
-    right: 32rem;
+.personal-details {
+    
 }
 
 #contact-button {
