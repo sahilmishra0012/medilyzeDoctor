@@ -1,0 +1,56 @@
+.container-dashboard {
+    padding-top: 10rem;
+    padding-bottom: 6rem;
+    padding-right: 4rem;
+    padding-left: 4rem;
+    background-color: #1990ea;
+    border: 1rem solid #BFDBF1;
+}
+
+.navbar-right {
+    position: absolute;
+    top: 6rem;
+    right: 7rem;
+    display: inline-flex;
+    color: white;
+}
+
+#account-link-dashboard {
+    margin-right: 2.5rem;
+    margin-left: 0.5rem;
+}
+
+.navbar-left {
+    z-index: 10;
+    position: absolute;
+    top: 3rem;
+}
+
+.content-dashboard {
+    background-color: #ffffff;
+    height: 44rem;
+    border: 0.7rem solid #BFDBF1;
+    color: #555555;
+}
+
+.personal-details {
+    height: 10rem;
+}
+
+.greeting {
+    position: absolute;
+    top: 15rem;
+    right: 32rem;
+}
+
+#contact-button {
+    background-color: #B13222;
+    position: absolute;
+    top: 15rem;
+    right: 5rem;
+    color: white;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-top-left-radius: 0.7rem;
+    border-bottom-right-radius: 0.7rem;
+}

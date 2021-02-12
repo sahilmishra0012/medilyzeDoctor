@@ -14,14 +14,14 @@ import { useHistory } from "react-router-dom";
 
 export default function LoginPatient() {
     const uidRef = useRef()
-    const { login, logout } = useAuth()
+    const { login, logout, currentUser } = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useHistory()
 
     async function handleSubmit(e) {
         e.preventDefault()
-    
+        console.log(currentUser)
         try {
             setError("")
             setLoading(true)

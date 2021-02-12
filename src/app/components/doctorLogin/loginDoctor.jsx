@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 import logo from "../../../images/logo.png";
 import containerImage from "../../../images/Group 1.png";
 import axios from 'axios';
@@ -18,8 +19,9 @@ import { Link, useHistory } from "react-router-dom";
 export default function LoginDoctor() {
     const emailRef = useRef()
     const passwordRef = useRef()
-    const { login } = useAuth()
+    const { login, resetPassword } = useAuth()
     const [error, setError] = useState("")
+    const [reset, setReset] = useState(false)
     const [loading, setLoading] = useState(false)
     const history = useHistory()
   
@@ -38,12 +40,27 @@ export default function LoginDoctor() {
         setLoading(false)
     }
 
-    function handleUserGroupChange() {
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setReset(false);
+    };
 
-    }
-
-    function handleForgotPassword() {
-
+    async function handleForgotPassword(e) {
+        e.preventDefault()
+    
+        try {
+            setError("")
+            setLoading(true)
+            await resetPassword(emailRef.current.value)
+            setReset(true)
+        } catch {
+            setError("Failed to reset password")
+        }
+    
+        setLoading(false)
     }
 
     return (
@@ -58,8 +75,8 @@ export default function LoginDoctor() {
                         Sign in by entering the information below
                     </Typography>
                 </div>
-                {error && <Alert severity="error">{error}</Alert>}
                 <form className="form-container-doctor" noValidate onSubmit={handleSubmit}>
+                    {error && <Alert severity="error" style={{marginBottom: "1rem", width: "29.5rem"}}>{error}</Alert>}
                     <Grid container spacing={2}>
                         <Grid item xs={9}>
                             <TextField
@@ -95,7 +112,7 @@ export default function LoginDoctor() {
                                 label="Remember me"
                             />
                             <Typography id="forgot-password-link">
-                                <Link to="/" onClick={handleForgotPassword}>
+                                <Link onClick={handleForgotPassword}>
                                     Forgot Password?
                                 </Link>
                             </Typography>
@@ -113,6 +130,11 @@ export default function LoginDoctor() {
                         >
                             Sign In
                         </Button>
+                        <Snackbar open={reset} autoHideDuration={6000} onClose={handleClose}>
+                            <Alert onClose={handleClose} severity="success" variant="filled">
+                                A reset password link has been sent to your mail
+                            </Alert>
+                        </Snackbar>
                     </Grid>
                 </form>
                 <img src={containerImage} alt="loginPage" className="container-image-doctor" />
