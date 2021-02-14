@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import './dashboardPatient.css';
 import { loadCSS } from 'fg-loadcss';
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { withStyles } from "@material-ui/core/styles";
 import { AppBar, Box, Button, Grid, makeStyles, Tab, Tabs, Typography } from "@material-ui/core";
-import Icon from '@material-ui/core/Icon';
+// import Icon from '@material-ui/core/Icon';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CallIcon from '@material-ui/icons/Call';
 import MailIcon from '@material-ui/icons/Mail';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -19,7 +20,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import NavbarImage from '../../../images/navbarImage.png';
-import { fetchPatientData, fetchDoctorName } from "../../contexts/FirestoreContext";
+import { fetchPatientData, fetchDoctorName, getDob } from "../../contexts/FirestoreContext";
+// npm install --save-dev @iconify/react @iconify-icons/mdi
+import { Icon, InlineIcon } from '@iconify/react';
+import genderMaleFemale from '@iconify-icons/mdi/gender-male-female';
+
 
 
 function TabPanel(props) {
@@ -72,7 +77,20 @@ export default function DashboardPatient() {
     const [open, setOpen] = useState(false);
     const { logout, getUID } = useAuth();
     const history = useHistory();
+    const location = useLocation();
     const [doctorName, setDoctorName] = useState("")
+    const [patientData, setPatientData] = useState({})
+    const [dob, setDob] = useState("")
+
+    useEffect(() => {
+        async function fetchData() {
+            const UID = getUID();
+            const name = await getDob(location.state.pid);
+            setDob(name)
+        }
+        fetchData();
+    }, [dob])
+
 
     useEffect(() => {
         async function fetchData() {
@@ -82,6 +100,15 @@ export default function DashboardPatient() {
         }
         fetchData();
     }, [doctorName])
+
+    useEffect(() => {
+        async function fetchData() {
+            const UID = getUID();
+            const name = await fetchPatientData(location.state.pid);
+            setPatientData(name)
+        }
+        fetchData();
+    }, [patientData])
 
     async function handleExit() {
         setError("")
@@ -147,34 +174,45 @@ export default function DashboardPatient() {
             <div className="content-dashboard">
                 <div className="personal-details">
                     <div className="patient-image">
-                        <img alt="patient" src="" />
+                        <img alt=""
+                            src={patientData.photo} style={{ width: '100%', height: '100%' }} />
                     </div>
                     <Grid container spacing={1} style={{ width: "40rem", margin: "1.5rem", display: "inline-flex" }}>
-                        <Grid container item xs={12}>
+                        <Grid container item xs={6}>
                             <AccountCircleIcon style={{ fontSize: 27 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                Neha Sharma
-                            </Typography>
-                        </Grid>
-                        <Grid container item xs={6}>
-                            <Icon className="fas fa-venus-mars" style={{ fontSize: 27 }} />
-                            <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                Female, 25
+                                {patientData.name}
                             </Typography>
                         </Grid>
                         <Grid container item xs={6}>
                             <CallIcon style={{ fontSize: 27 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                +(92) 7859683542
+                                {patientData.phone}
                             </Typography>
                         </Grid>
                         <Grid container item xs={6}>
+                            <Icon icon={genderMaleFemale} style={{ fontSize: 25 }} />
+                            <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
+                                {patientData.gender}
+                            </Typography>
+                        </Grid>
+
+                        <Grid container item xs={6}>
                             <MailIcon style={{ fontSize: 27 }} />
+                            <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
+                                {patientData.email}
+                            </Typography>
                         </Grid>
                         <Grid container item xs={6}>
+                            <PermContactCalendarIcon style={{ fontSize: 27 }} />
+                            <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
+                                {dob}
+                            </Typography>
+                        </Grid>
+                        <Grid container item xs={12}>
                             <LocationOnIcon style={{ fontSize: 27 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                House No. - 3121, phase 7, Mohali
+                                {patientData.address}
                             </Typography>
                         </Grid>
                     </Grid>

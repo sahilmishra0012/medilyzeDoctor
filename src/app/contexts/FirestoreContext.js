@@ -16,33 +16,54 @@ export const fetchDoctorName = async (value) => {
 }
 
 export const fetchPatientData = async (value) => {
-    const uidRef = db.collection('patientIDUID').doc(value.trim());
-    uidRef.get().then((doc) => {
+    const pidRef = db.collection('patientIDUID').doc(value.trim());
+    const uidDoc = await pidRef.get()
+    if (uidDoc.exists) {
+        let data = uidDoc.data()['uid'];
+        const uidRef = db.collection('patients').doc(data);
+        const doc = await uidRef.get()
         if (doc.exists) {
-            let data = doc.data();
-            const patientRef = db.collection('patients').doc(data['uid'])
-            patientRef.get().then((doc) => {
-                if (doc.exists) {
-                    let data = doc.data();
-                    console.log(data);
-                    return data;
-                }
-                else {
-                    console.log("No such document!");
-                    return -999;
-                }
-
-            }).catch(function (error) {
-                console.log("Error getting document:", error);
-                return -999;
-            });
-
-        } else {
-            console.log("No such document!");
+            let patientData = doc.data();
+            console.log(patientData);
+            var t = new Date(1970, 0, 1); // Epoch
+            t.setSeconds(patientData.dob.seconds);
+            patientData.dob.date = t;
+            return patientData;
+        }
+        else {
+            console.log("No such patient!");
             return -999;
         }
-    }).catch(function (error) {
-        console.log("Error getting document:", error);
+    }
+    else {
+        console.log("No such document!");
         return -999;
-    });
+    }
+}
+
+export const getDob = async (value) => {
+    const pidRef = db.collection('patientIDUID').doc(value.trim());
+    const uidDoc = await pidRef.get()
+    if (uidDoc.exists) {
+        let data = uidDoc.data()['uid'];
+        const uidRef = db.collection('patients').doc(data);
+        const doc = await uidRef.get()
+        if (doc.exists) {
+            let patientData = doc.data();
+            console.log(patientData);
+            var t = new Date(1970, 0, 2); // Epoch
+            t.setSeconds(patientData.dob.seconds);
+            console.log(t);
+            var date = t.toString().split(' ')[2] + " " + t.toString().split(' ')[1] + " " + t.toString().split(' ')[3]
+            return date;
+        }
+        else {
+            console.log("No such patient!");
+            return -999;
+        }
+    }
+    else {
+        console.log("No such document!");
+        return -999;
+    }
 }

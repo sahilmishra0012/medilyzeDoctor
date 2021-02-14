@@ -1,73 +1,72 @@
 .container-dashboard {
-    padding-top: 10rem;
-    padding-bottom: 6rem;
-    padding-right: 4rem;
-    padding-left: 4rem;
-    background-color: #1990ea;
-    border: 1rem solid #BFDBF1;
+  padding-top: 10rem;
+  padding-bottom: 6rem;
+  padding-right: 4rem;
+  padding-left: 4rem;
+  background-color: #1990ea;
+  border: 1rem solid #bfdbf1;
 }
 
 .navbar-right {
-    position: absolute;
-    top: 6rem;
-    right: 5rem;
-    display: inline-flex;
-    color: white;
+  position: absolute;
+  top: 6rem;
+  right: 5rem;
+  display: inline-flex;
+  color: white;
 }
 
 #account-link-dashboard {
-    margin-right: 2.5rem;
-    margin-left: 0.5rem;
+  margin-right: 2.5rem;
+  margin-left: 0.5rem;
 }
 
 .navbar-left {
-    z-index: 10;
-    display: flex;
-    position: absolute;
-    top: 2rem;
-    left: 3rem;
+  z-index: 10;
+  display: flex;
+  position: absolute;
+  top: 2rem;
+  left: 3rem;
 }
 
 .navbar-image {
-    height: 8rem;
-    display: inline-flex;
+  height: 8rem;
+  display: inline-flex;
 }
 
 .navbar-headings {
-    display: block;
-    margin-top: 1rem;
-    text-align: left;
+  display: block;
+  margin-top: 1rem;
+  text-align: left;
 }
 
 .content-dashboard {
-    background-color: #ffffff;
-    height: 44rem;
-    border: 0.7rem solid #BFDBF1;
-    color: #555555;
+  background-color: #ffffff;
+  height: 44rem;
+  border: 0.7rem solid #bfdbf1;
+  color: #555555;
 }
 
-.patient-image{
-    width: 8rem;
-    height: 8rem;
-    display: inline-block;
-    border-radius: 50%;
-    position: absolute;
-    top: 13rem;
-    left: 7rem;
+.patient-image {
+  width: 10rem;
+  height: 10rem;
+  display: inline-block;
+  border-radius: 50%;
+  position: absolute;
+  top: 13rem;
+  left: 7rem;
 }
 
 .personal-details {
-    
 }
 
 #contact-button {
-    background-color: #B13222;
-    position: absolute;
-    top: 15rem;
-    right: 5rem;
-    color: white;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-top-left-radius: 0.7rem;
-    border-bottom-right-radius: 0.7rem;
+  background-color: #b13222;
+  position: absolute;
+  top: 15rem;
+  right: 5rem;
+  color: white;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-top-left-radius: 0.7rem;
+  border-bottom-right-radius: 0.7rem;
 }

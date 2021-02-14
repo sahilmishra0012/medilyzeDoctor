@@ -37,8 +37,8 @@ export default function LoginPatient() {
         try {
             setError("")
             setLoading(true)
-            await fetchPatientData(uidRef.current.value)
-            history.push("/patientProfile")
+            // await fetchPatientData(uidRef.current.value)
+            history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
         } catch {
             setError("Failed to log in")
         }
