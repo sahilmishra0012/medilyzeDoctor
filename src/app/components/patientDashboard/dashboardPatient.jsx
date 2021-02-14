@@ -19,10 +19,12 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import NavbarImage from '../../../images/navbarImage.png';
+import { fetchPatientData, fetchDoctorName } from "../../contexts/FirestoreContext";
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
-  
+
     return (
         <div
             role="tabpanel"
@@ -32,14 +34,14 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-            <Box p={3}>
-                <Typography>{children}</Typography>
-            </Box>
+                <Box p={3}>
+                    <Typography>{children}</Typography>
+                </Box>
             )}
         </div>
     );
 }
-  
+
 TabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.any.isRequired,
@@ -68,8 +70,18 @@ export default function DashboardPatient() {
     const [error, setError] = useState("");
     const [value, setValue] = useState(0);
     const [open, setOpen] = useState(false);
-    const { logout } = useAuth();
+    const { logout, getUID } = useAuth();
     const history = useHistory();
+    const [doctorName, setDoctorName] = useState("")
+
+    useEffect(() => {
+        async function fetchData() {
+            const UID = getUID();
+            const name = await fetchDoctorName(UID);
+            setDoctorName(name)
+        }
+        fetchData();
+    }, [doctorName])
 
     async function handleExit() {
         setError("")
@@ -97,7 +109,7 @@ export default function DashboardPatient() {
             'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
             document.querySelector('#font-awesome-css'),
         );
-    
+
         return () => {
             node.parentNode.removeChild(node);
         };
@@ -119,7 +131,7 @@ export default function DashboardPatient() {
                     <WhiteTextTypography variant="h2" style={{ fontWeight: "900", fontSize: "4rem", marginBottom: "-0.5rem" }}>
                         Dashboard
                     </WhiteTextTypography>
-                    <Typography variant="h6" style={{color: "#626B74", marginLeft: "0.1rem"}}>
+                    <Typography variant="h6" style={{ color: "#626B74", marginLeft: "0.1rem" }}>
                         Profile/Prescription/Billing
                     </Typography>
                 </div>
@@ -127,7 +139,7 @@ export default function DashboardPatient() {
             <div className="navbar-right">
                 <AccountCircleIcon />
                 <Typography id="account-link-dashboard">
-                    Doctor's Name
+                    {doctorName}
                 </Typography>
                 <Typography>
                     <Link to="/patientSearch" onClick={handleExit}>Exit</Link>
@@ -138,23 +150,23 @@ export default function DashboardPatient() {
                     <div className="patient-image">
                         <img alt="patient" src="" />
                     </div>
-                    <Grid container spacing={1} style={{width: "40rem", margin: "1.5rem", display:"inline-flex"}}>
+                    <Grid container spacing={1} style={{ width: "40rem", margin: "1.5rem", display: "inline-flex" }}>
                         <Grid container item xs={12}>
                             <AccountCircleIcon style={{ fontSize: 27 }} />
-                            <Typography variant="subtitle2" align="left" style={{margin: "0.25rem"}}>
+                            <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
                                 Neha Sharma
                             </Typography>
                         </Grid>
                         <Grid container item xs={6}>
                             <Icon className="fas fa-venus-mars" style={{ fontSize: 27 }} />
-                            <Typography variant="subtitle2" align="left" style={{margin: "0.25rem"}}>
-                                 Female, 25
+                            <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
+                                Female, 25
                             </Typography>
                         </Grid>
                         <Grid container item xs={6}>
                             <CallIcon style={{ fontSize: 27 }} />
-                            <Typography variant="subtitle2" align="left" style={{margin: "0.25rem"}}>
-                                 +(92) 7859683542
+                            <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
+                                +(92) 7859683542
                             </Typography>
                         </Grid>
                         <Grid container item xs={6}>
@@ -162,8 +174,8 @@ export default function DashboardPatient() {
                         </Grid>
                         <Grid container item xs={6}>
                             <LocationOnIcon style={{ fontSize: 27 }} />
-                            <Typography variant="subtitle2" align="left" style={{margin: "0.25rem"}}>
-                                 House No. - 3121, phase 7, Mohali
+                            <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
+                                House No. - 3121, phase 7, Mohali
                             </Typography>
                         </Grid>
                     </Grid>
@@ -171,49 +183,49 @@ export default function DashboardPatient() {
                     <Dialog open={open} onClose={handleClose} aria-labelledby="contact" TransitionComponent={Transition} keepMounted>
                         <DialogTitle id="form-dialog-title">Contact Us</DialogTitle>
                         <DialogContent>
-                        <DialogContentText>
-                            To send us a message, type in the below form and we will reach out to you soon.
+                            <DialogContentText>
+                                To send us a message, type in the below form and we will reach out to you soon.
                         </DialogContentText>
-                        <TextField
-                            variant="outlined"
-                            required
-                            autoFocus
-                            margin="dense"
-                            id="subject"
-                            label="Subject"
-                            type="text"
-                            color="secondary"
-                            fullWidth
-                        />
-                        <TextField
-                            variant="outlined"
-                            required
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Message"
-                            multiline="true"
-                            type="text"
-                            color="secondary"
-                            fullWidth
-                        />
+                            <TextField
+                                variant="outlined"
+                                required
+                                autoFocus
+                                margin="dense"
+                                id="subject"
+                                label="Subject"
+                                type="text"
+                                color="secondary"
+                                fullWidth
+                            />
+                            <TextField
+                                variant="outlined"
+                                required
+                                autoFocus
+                                margin="dense"
+                                id="name"
+                                label="Message"
+                                multiline="true"
+                                type="text"
+                                color="secondary"
+                                fullWidth
+                            />
                         </DialogContent>
                         <DialogActions>
-                        <Button onClick={handleClose} color="secondary">
-                            Cancel
+                            <Button onClick={handleClose} color="secondary">
+                                Cancel
                         </Button>
-                        <Button onClick={handleClose} color="secondary">
-                            Send
+                            <Button onClick={handleClose} color="secondary">
+                                Send
                         </Button>
                         </DialogActions>
                     </Dialog>
                 </div>
                 <div>
                     <AppBar position="static">
-                        <Tabs value={value} onChange={handleChange} aria-label="patient-medical-details" style={{backgroundColor: "#1990EA"}}>
-                        <Tab label="Prescription" {...a11yProps(0)} />
-                        <Tab label="Billing" {...a11yProps(1)} />
-                        <Tab label="Appointment History" {...a11yProps(2)} />
+                        <Tabs value={value} onChange={handleChange} aria-label="patient-medical-details" style={{ backgroundColor: "#1990EA" }}>
+                            <Tab label="Prescription" {...a11yProps(0)} />
+                            <Tab label="Billing" {...a11yProps(1)} />
+                            <Tab label="Appointment History" {...a11yProps(2)} />
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>

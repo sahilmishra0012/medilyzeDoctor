@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import './loginPatient.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,19 +10,30 @@ import Alert from '@material-ui/lab/Alert';
 import logo from "../../../images/logo.png"
 import containerImage from "../../../images/7882.png"
 import { useAuth } from "../../contexts/AuthContext";
-import { fetchPatientData } from "../../contexts/FirestoreContext";
+import { fetchPatientData, fetchDoctorName } from "../../contexts/FirestoreContext";
+
 import { useHistory } from "react-router-dom";
+
 
 export default function LoginPatient() {
     const uidRef = useRef()
-    const { login, logout, currentUser } = useAuth()
+    const { login, logout, getUID } = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
+    const [doctorName, setDoctorName] = useState("")
     const history = useHistory()
+
+    useEffect(() => {
+        async function fetchData() {
+            const UID = getUID();
+            const name = await fetchDoctorName(UID);
+            setDoctorName(name)
+        }
+        fetchData();
+    }, [doctorName])
 
     async function handleSubmit(e) {
         e.preventDefault()
-        console.log(currentUser)
         try {
             setError("")
             setLoading(true)
@@ -31,7 +42,7 @@ export default function LoginPatient() {
         } catch {
             setError("Failed to log in")
         }
-    
+
         setLoading(false)
     }
 
@@ -45,13 +56,12 @@ export default function LoginPatient() {
             setError("Failed to log out")
         }
     }
-
     return (
         <div className="container-patient">
             <div className="navbar">
-                <AccountCircleIcon/>
+                <AccountCircleIcon />
                 <Typography id="account-link">
-                    Doctor's Name
+                    {doctorName}
                 </Typography>
                 <Typography>
                     <Link onClick={handleLogout}>
