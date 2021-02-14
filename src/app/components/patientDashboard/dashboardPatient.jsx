@@ -87,7 +87,6 @@ export default function DashboardPatient() {
         setError("")
 
         try {
-            await logout()
             history.push("/patientSearch")
         } catch {
             setError("Failed to exit")
