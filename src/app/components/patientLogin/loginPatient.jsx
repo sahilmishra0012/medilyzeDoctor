@@ -11,6 +11,8 @@ import logo from "../../../images/logo.png"
 import containerImage from "../../../images/7882.png"
 import { useAuth } from "../../contexts/AuthContext";
 import { fetchPatientData, fetchDoctorName } from "../../contexts/FirestoreContext";
+import { generateOTP } from "../../contexts/FirebaseDatabaseContext";
+
 
 import { useHistory } from "react-router-dom";
 
@@ -33,7 +35,7 @@ export default function LoginPatient() {
         fetchData();
     }, [doctorName])
 
-    async function handleSubmit(e) {
+    async function handleSubmit1(e) {
         e.preventDefault()
         try {
             setError("")
@@ -47,9 +49,7 @@ export default function LoginPatient() {
         setLoading(false)
     }
 
-    function handleOTPSend() {
 
-    }
 
     async function handleLogout() {
         setError("")
