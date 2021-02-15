@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 
 export default function LoginPatient() {
     const uidRef = useRef()
+    const otpRef = useRef()
     const { login, logout, getUID } = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
@@ -44,6 +45,10 @@ export default function LoginPatient() {
         }
 
         setLoading(false)
+    }
+
+    function handleOTPSend() {
+
     }
 
     async function handleLogout() {
@@ -80,7 +85,7 @@ export default function LoginPatient() {
                     </Typography>
                 </div>
                 {error && <Alert severity="error">{error}</Alert>}
-                <form className="form-container-patient" noValidate onSubmit={handleSubmit}>
+                <form className="otp-form-container-patient" noValidate onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={9}>
                             <TextField
@@ -94,19 +99,44 @@ export default function LoginPatient() {
                                 inputRef={uidRef}
                             />
                         </Grid>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Button
-                            type="submit"
-                            fullWidth="false"
-                            variant="contained"
-                            color="primary"
-                            size="medium"
-                            id="submit-form"
-                            disabled={loading}
-                        >
-                            Access Profile
-                        </Button>
+                        <Grid item xs={3}>
+                            <Button
+                                type="button"
+                                fullWidth="false"
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                                id="send-otp"
+                                onClick={handleOTPSend}
+                            >
+                                Send OTP
+                            </Button>
+                        </Grid>
+                        <Grid item xs={9}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="otp"
+                                label="Enter OTP"
+                                name="otp"
+                                color="primary"
+                                inputRef={otpRef}
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Button
+                                type="submit"
+                                fullWidth="false"
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                                id="submit-form"
+                                disabled={loading}
+                            >
+                                Access Profile
+                            </Button>
+                        </Grid>
                     </Grid>
                 </form>
                 <img src={containerImage} alt="loginPage" className="container-image-patient" />
