@@ -176,7 +176,7 @@ export default function DashboardPatient() {
                 <div className="personal-details">
                     <div className="patient-image">
                         <img alt=""
-                            src={patientData.photo} style={{ width: '100%', height: '100%' }} />
+                            src={patientData.photo} style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
                     </div>
                     <Grid container spacing={1} style={{ width: "40rem", margin: "1.5rem", display: "inline-flex" }}>
                         <Grid container item xs={6}>
