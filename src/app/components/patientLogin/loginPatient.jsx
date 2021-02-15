@@ -48,19 +48,6 @@ export default function LoginPatient() {
         setLoading(false)
     }
 
-    async function handleSubmit(e) {
-        e.preventDefault()
-        try {
-            setError("")
-            setLoading(true)
-            generateOTP(uidRef.current.value)
-            // history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
-        } catch {
-            setError("Failed to log in")
-        }
-
-        setLoading(false)
-    }
 
     async function handleLogout() {
         setError("")
@@ -96,7 +83,7 @@ export default function LoginPatient() {
                     </Typography>
                 </div>
                 {error && <Alert severity="error">{error}</Alert>}
-                <form className="form-container-patient" noValidate onSubmit={handleSubmit1}>
+                <form className="form-container-patient" noValidate onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={9}>
                             <TextField
