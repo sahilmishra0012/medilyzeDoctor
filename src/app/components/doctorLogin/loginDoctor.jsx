@@ -24,33 +24,40 @@ export default function LoginDoctor() {
     const [reset, setReset] = useState(false)
     const [loading, setLoading] = useState(false)
     const history = useHistory()
-  
+
     async function handleSubmit(e) {
         e.preventDefault()
-    
+
         try {
             setError("")
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
             history.push("/patientSearch")
-        } catch {
-            setError("Failed to log in")
+        } catch (e) {
+            if (e.code == 'auth/wrong-password') {
+                console.log("Password is incorrect");
+                setError("Password is incorrect");
+            }
+            else if (e.code == 'auth/invalid-email') {
+                console.log("User does not exist");
+                setError("User does not exist");
+            }
         }
-    
+
         setLoading(false)
     }
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
-          return;
+            return;
         }
-    
+
         setReset(false);
     };
 
     async function handleForgotPassword(e) {
         e.preventDefault()
-    
+
         try {
             setError("")
             setLoading(true)
@@ -59,7 +66,7 @@ export default function LoginDoctor() {
         } catch {
             setError("Failed to reset password")
         }
-    
+
         setLoading(false)
     }
 
@@ -76,7 +83,7 @@ export default function LoginDoctor() {
                     </Typography>
                 </div>
                 <form className="form-container-doctor" noValidate onSubmit={handleSubmit}>
-                    {error && <Alert severity="error" style={{marginBottom: "1rem", width: "29.5rem"}}>{error}</Alert>}
+                    {error && <Alert severity="error" style={{ marginBottom: "1rem", width: "29.5rem" }}>{error}</Alert>}
                     <Grid container spacing={2}>
                         <Grid item xs={9}>
                             <TextField
@@ -106,7 +113,7 @@ export default function LoginDoctor() {
                             />
                         </Grid>
                         <Grid container xs={9}>
-                            <FormControlLabel 
+                            <FormControlLabel
                                 className="remember-checkbox"
                                 control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
                                 label="Remember me"
