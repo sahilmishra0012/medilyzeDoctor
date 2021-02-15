@@ -12,6 +12,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CallIcon from '@material-ui/icons/Call';
 import MailIcon from '@material-ui/icons/Mail';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -207,6 +208,12 @@ export default function DashboardPatient() {
                             <PermContactCalendarIcon style={{ fontSize: 27 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
                                 {dob}
+                            </Typography>
+                        </Grid>
+                        <Grid container item xs={6}>
+                            <InvertColorsIcon style={{ fontSize: 27 }} />
+                            <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
+                                {patientData.blood_group}
                             </Typography>
                         </Grid>
                         <Grid container item xs={12}>
