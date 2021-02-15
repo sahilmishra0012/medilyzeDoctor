@@ -47,11 +47,19 @@
     left: 9rem;
 }
 
-.form-container-patient {
+.otp-form-container-patient {
     width: 50%;
     padding: 4rem;
     position: absolute;
     top: 21rem;
+    z-index: 10;
+}
+
+.form-container-patient {
+    width: 50%;
+    padding: 4rem;
+    position: absolute;
+    top: 30rem;
     z-index: 10;
 }
 
@@ -60,6 +68,8 @@
     margin-top: 0.3rem;
 }
 
-#submit-form {
-    margin-top: 1.5rem;
+#send-otp {
+    margin-top: 0.4rem;
+    border-radius: 6rem;
+    width: 8rem;
 }
