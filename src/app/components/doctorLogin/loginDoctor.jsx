@@ -3,17 +3,12 @@ import './loginDoctor.css';
 import { useAuth } from "../../contexts/AuthContext"
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Favorite from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import logo from "../../../images/logo.png";
 import containerImage from "../../../images/Group 1.png";
-import axios from 'axios';
 import { Link, useHistory } from "react-router-dom";
 
 export default function LoginDoctor() {
@@ -34,11 +29,11 @@ export default function LoginDoctor() {
             await login(emailRef.current.value, passwordRef.current.value)
             history.push("/patientSearch")
         } catch (e) {
-            if (e.code == 'auth/wrong-password') {
+            if (e.code === 'auth/wrong-password') {
                 console.log("Password is incorrect");
                 setError("Password is incorrect");
             }
-            else if (e.code == 'auth/invalid-email') {
+            else if (e.code === 'auth/invalid-email') {
                 console.log("User does not exist");
                 setError("User does not exist");
             }
@@ -113,11 +108,6 @@ export default function LoginDoctor() {
                             />
                         </Grid>
                         <Grid container xs={9}>
-                            <FormControlLabel
-                                className="remember-checkbox"
-                                control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-                                label="Remember me"
-                            />
                             <Typography id="forgot-password-link">
                                 <Link onClick={handleForgotPassword}>
                                     Forgot Password?

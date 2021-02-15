@@ -11,6 +11,8 @@ import logo from "../../../images/logo.png"
 import containerImage from "../../../images/7882.png"
 import { useAuth } from "../../contexts/AuthContext";
 import { fetchPatientData, fetchDoctorName } from "../../contexts/FirestoreContext";
+import { generateOTP } from "../../contexts/FirebaseDatabaseContext";
+
 
 import { useHistory } from "react-router-dom";
 
@@ -32,13 +34,27 @@ export default function LoginPatient() {
         fetchData();
     }, [doctorName])
 
-    async function handleSubmit(e) {
+    async function handleSubmit1(e) {
         e.preventDefault()
         try {
             setError("")
             setLoading(true)
             // await fetchPatientData(uidRef.current.value)
             history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
+        } catch {
+            setError("Failed to log in")
+        }
+
+        setLoading(false)
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        try {
+            setError("")
+            setLoading(true)
+            generateOTP(uidRef.current.value)
+            // history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
         } catch {
             setError("Failed to log in")
         }
@@ -80,7 +96,7 @@ export default function LoginPatient() {
                     </Typography>
                 </div>
                 {error && <Alert severity="error">{error}</Alert>}
-                <form className="form-container-patient" noValidate onSubmit={handleSubmit}>
+                <form className="form-container-patient" noValidate onSubmit={handleSubmit1}>
                     <Grid container spacing={2}>
                         <Grid item xs={9}>
                             <TextField
