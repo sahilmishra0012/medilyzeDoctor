@@ -24,7 +24,6 @@ export const fetchPatientData = async (value) => {
         const doc = await uidRef.get()
         if (doc.exists) {
             let patientData = doc.data();
-            console.log(patientData);
             var t = new Date(1970, 0, 1); // Epoch
             t.setSeconds(patientData.dob.seconds);
             patientData.dob.date = t;
@@ -50,10 +49,8 @@ export const getDob = async (value) => {
         const doc = await uidRef.get()
         if (doc.exists) {
             let patientData = doc.data();
-            console.log(patientData);
             var t = new Date(1970, 0, 2); // Epoch
             t.setSeconds(patientData.dob.seconds);
-            console.log(t);
             var date = t.toString().split(' ')[2] + " " + t.toString().split(' ')[1] + " " + t.toString().split(' ')[3]
             return date;
         }
