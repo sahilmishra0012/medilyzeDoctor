@@ -11,7 +11,7 @@ import logo from "../../../images/logo.png"
 import containerImage from "../../../images/7882.png"
 import { useAuth } from "../../contexts/AuthContext";
 import { fetchPatientData, fetchDoctorName } from "../../contexts/FirestoreContext";
-import { generateOTP, getOTP } from "../../contexts/FirebaseDatabaseContext";
+import { generateOTP, deleteOtp } from "../../contexts/FirebaseDatabaseContext";
 
 
 import { useHistory } from "react-router-dom";
@@ -59,6 +59,7 @@ export default function LoginPatient() {
             console.log(otp);
             console.log(otpRef.current.value);
             if (otp == otpRef.current.value) {
+                await deleteOtp(uidRef.current.value);
                 history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
             }
             else {
