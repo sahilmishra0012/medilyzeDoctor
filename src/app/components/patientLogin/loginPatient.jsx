@@ -11,7 +11,7 @@ import logo from "../../../images/logo.png"
 import containerImage from "../../../images/7882.png"
 import { useAuth } from "../../contexts/AuthContext";
 import { fetchPatientData, fetchDoctorName } from "../../contexts/FirestoreContext";
-import { generateOTP } from "../../contexts/FirebaseDatabaseContext";
+import { generateOTP, getOTP } from "../../contexts/FirebaseDatabaseContext";
 
 
 import { useHistory } from "react-router-dom";
@@ -24,6 +24,7 @@ export default function LoginPatient() {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const [doctorName, setDoctorName] = useState("")
+    const [otp, setOtp] = useState("");
     const history = useHistory()
 
     useEffect(() => {
@@ -40,8 +41,9 @@ export default function LoginPatient() {
         try {
             setError("")
             setLoading(true)
-            generateOTP(uidRef.current.value)
-            // history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
+            const rand = Math.floor(100000 + Math.random() * 900000);
+            generateOTP(uidRef.current.value, rand)
+            setOtp(rand);
         } catch {
             setError("Failed to log in")
         }
@@ -54,8 +56,14 @@ export default function LoginPatient() {
         try {
             setError("")
             setLoading(true)
-            // await fetchPatientData(uidRef.current.value)
-            history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
+            console.log(otp);
+            console.log(otpRef.current.value);
+            if (otp == otpRef.current.value) {
+                history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
+            }
+            else {
+                setError("Incorrect OTP");
+            }
         } catch {
             setError("Failed to log in")
         }
