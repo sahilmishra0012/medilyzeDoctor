@@ -12,7 +12,7 @@ import Slide from '@material-ui/core/Slide';
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function AppointmentHistory() {
+export default function AppointmentHistory(props) {
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -61,7 +61,7 @@ export default function AppointmentHistory() {
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography variant="h6">
-                                                {appointment.doctorName}
+                                                {props.pid}
                                             </Typography>
                                             <Typography variant="subtitle1" style={{color: "#333333", marginBottom: "0.3rem"}}>
                                                 {appointment.doctorSpecialization}
