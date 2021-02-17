@@ -56,16 +56,15 @@ export default function LoginPatient() {
         try {
             setError("")
             setLoading(true)
-            console.log(otp);
-            console.log(otpRef.current.value);
-            if (otp == otpRef.current.value) {
+            if (otp == otpRef.current.value && otp.length!=0 && otpRef.current.value.length!=0) {
                 await deleteOtp(uidRef.current.value);
                 history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
             }
             else {
                 setError("Incorrect OTP");
             }
-        } catch {
+        } catch (e){
+            console.log(e);
             setError("Failed to log in")
         }
 
