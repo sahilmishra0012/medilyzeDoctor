@@ -1,0 +1,17 @@
+.appointment-history-content {
+    text-align: left;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.appointment-list-content {
+    background-color: #F0F2F3;
+    margin-top: 3rem;
+    padding: 0.5rem;
+}
+
+.appointment-doctor-details {
+    padding: 0.5rem;
+    width: 27rem;
+    height: 8.5rem;
+}

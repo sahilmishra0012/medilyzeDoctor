@@ -6,7 +6,6 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { withStyles } from "@material-ui/core/styles";
 import { AppBar, Box, Button, Grid, makeStyles, Tab, Tabs, Typography } from "@material-ui/core";
-// import Icon from '@material-ui/core/Icon';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CallIcon from '@material-ui/icons/Call';
@@ -22,9 +21,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import NavbarImage from '../../../images/navbarImage.png';
 import { fetchPatientData, fetchDoctorName, getDob } from "../../contexts/FirestoreContext";
-// npm install --save-dev @iconify/react @iconify-icons/mdi
 import { Icon, InlineIcon } from '@iconify/react';
 import genderMaleFemale from '@iconify-icons/mdi/gender-male-female';
+import Prescription from './tabComponents/prescription';
+import AppointmentHistory from './tabComponents/appointmentHistory';
 
 
 
@@ -267,19 +267,15 @@ export default function DashboardPatient() {
                 <div>
                     <AppBar position="static">
                         <Tabs value={value} onChange={handleChange} aria-label="patient-medical-details" style={{ backgroundColor: "#1990EA" }}>
-                            <Tab label="Prescription" {...a11yProps(0)} />
+                            <Tab label="Appointment History and Prescription" {...a11yProps(0)} />
                             <Tab label="Billing" {...a11yProps(1)} />
-                            <Tab label="Appointment History" {...a11yProps(2)} />
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
-                        {/* <Prescription /> */}
+                        <AppointmentHistory />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         {/* <Billing /> */}
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        {/* <AppointmentHistory /> */}
                     </TabPanel>
                 </div>
             </div>
