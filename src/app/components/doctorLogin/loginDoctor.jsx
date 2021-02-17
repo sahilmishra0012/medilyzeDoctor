@@ -3,17 +3,12 @@ import './loginDoctor.css';
 import { useAuth } from "../../contexts/AuthContext"
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Favorite from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import logo from "../../../images/logo.png";
 import containerImage from "../../../images/Group 1.png";
-import axios from 'axios';
 import { Link, useHistory } from "react-router-dom";
 
 export default function LoginDoctor() {
@@ -24,33 +19,40 @@ export default function LoginDoctor() {
     const [reset, setReset] = useState(false)
     const [loading, setLoading] = useState(false)
     const history = useHistory()
-  
+
     async function handleSubmit(e) {
         e.preventDefault()
-    
+
         try {
             setError("")
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
             history.push("/patientSearch")
-        } catch {
-            setError("Failed to log in")
+        } catch (e) {
+            if (e.code === 'auth/wrong-password') {
+                console.log("Password is incorrect");
+                setError("Password is incorrect");
+            }
+            else if (e.code === 'auth/invalid-email') {
+                console.log("User does not exist");
+                setError("User does not exist");
+            }
         }
-    
+
         setLoading(false)
     }
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
-          return;
+            return;
         }
-    
+
         setReset(false);
     };
 
     async function handleForgotPassword(e) {
         e.preventDefault()
-    
+
         try {
             setError("")
             setLoading(true)
@@ -59,7 +61,7 @@ export default function LoginDoctor() {
         } catch {
             setError("Failed to reset password")
         }
-    
+
         setLoading(false)
     }
 
@@ -76,7 +78,7 @@ export default function LoginDoctor() {
                     </Typography>
                 </div>
                 <form className="form-container-doctor" noValidate onSubmit={handleSubmit}>
-                    {error && <Alert severity="error" style={{marginBottom: "1rem", width: "29.5rem"}}>{error}</Alert>}
+                    {error && <Alert severity="error" style={{ marginBottom: "1rem", width: "29.5rem" }}>{error}</Alert>}
                     <Grid container spacing={2}>
                         <Grid item xs={9}>
                             <TextField
@@ -106,11 +108,6 @@ export default function LoginDoctor() {
                             />
                         </Grid>
                         <Grid container xs={9}>
-                            <FormControlLabel 
-                                className="remember-checkbox"
-                                control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-                                label="Remember me"
-                            />
                             <Typography id="forgot-password-link">
                                 <Link onClick={handleForgotPassword}>
                                     Forgot Password?
