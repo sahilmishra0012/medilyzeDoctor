@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './tabComponents.css';
 import { Button, Grid, Paper, Typography } from '@material-ui/core';
 import DateRangeIcon from '@material-ui/icons/DateRange';
@@ -8,15 +8,27 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import { getAppointments } from "../../../contexts/FirebaseDatabaseContext";
+
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 export default function AppointmentHistory(props) {
     const [open, setOpen] = useState(false);
+    const [appointmentHistory, setAppointmentHistory] = useState("")
     const handleClickOpen = () => {
         setOpen(true);
     };
+
+    useEffect(() => {
+        async function fetchData() {
+            const data = await getAppointments(props.pid);
+            setAppointmentHistory(data)
+        }
+        fetchData();
+    }, [appointmentHistory])
 
     const handleClose = () => {
         setOpen(false);
@@ -29,94 +41,102 @@ export default function AppointmentHistory(props) {
         doctorSpecialization: "Cardiologist",
         status: "Admitted for 5 days"
     }]; //assign list from backend here
-    return (
-        <div className="appointment-history-content">
-            <Typography variant="h4" style={{color: "#1991EB"}}>
-                Appointment History
-            </Typography>
-            <Typography variant="subtitle2">
-                Dashboard/Appointment History/Prescription
-            </Typography>
-            <div>
-                {appointmentList.map((appointment) => (
-                    <div className="appointment-list-content">
-                        <Grid container spacing={0}>
-                            <Grid container item xs={2} alignContent="center">
-                                <Grid container item>
-                                    <Typography variant="h6">
-                                        Doctor's ID
-                                    </Typography>
-                                </Grid>
-                                <Grid container item>
-                                    <Typography variant="h5" style={{color: "#1991EB"}}>
-                                        {appointment.doctorId}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container item xs={8}>
-                                <Paper elevation={2} className="appointment-doctor-details">
-                                    <Grid container spacing={1}>
-                                        <Grid item xs={4}>
-                                            <img src={appointment.imageUrl} style={{height: "80%", width: "100%"}} />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant="h6">
-                                                {props.pid}
-                                            </Typography>
-                                            <Typography variant="subtitle1" style={{color: "#333333", marginBottom: "0.3rem"}}>
-                                                {appointment.doctorSpecialization}
-                                            </Typography>
-                                            <Typography variant="subtitle2" style={{color: "#555555"}}>
-                                                {appointment.preDiagnostics}
-                                            </Typography>
-                                            <Typography variant="subtitle2" style={{color: "#555555"}}>
-                                                {appointment.status}
-                                            </Typography>
-                                        </Grid>
+    if(appointmentHistory){
+        return (
+            <div className="appointment-history-content">
+                <Typography variant="h4" style={{color: "#1991EB"}}>
+                    Appointment History
+                </Typography>
+                <Typography variant="subtitle2">
+                    Dashboard/Appointment History/Prescription
+                </Typography>
+                <div>
+                    {appointmentHistory.map((appointment) => (
+                        <div className="appointment-list-content">
+                            <Grid container spacing={0}>
+                                <Grid container item xs={2} alignContent="center">
+                                    <Grid container item>
+                                        <Typography variant="h6">
+                                            Doctor's ID
+                                        </Typography>
                                     </Grid>
-                                </Paper>
-                            </Grid>
-                            <Grid container item xs={2} spacing={3}>
-                                <Grid container item xs={12}>
-                                    <Paper style={{width: "20rem", padding: "0.5rem"}}>
-                                        <DateRangeIcon />
-                                        <Typography variant="h6">22/12/2018</Typography>
+                                    <Grid container item>
+                                        <Typography variant="h6" style={{color: "#1991EB"}}>
+                                        {appointment[Object.keys(appointment)][0]['doctorID']}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid container item xs={8}>
+                                    <Paper elevation={2} className="appointment-doctor-details">
+                                        <Grid container spacing={1}>
+                                            
+                                            <Grid item xs={10}>
+                                                <Typography variant="h6">
+                                                    {appointment[Object.keys(appointment)][0]['doctor']}
+                                                </Typography>
+                                                <Typography variant="subtitle1" style={{color: "#333333", marginBottom: "0.3rem"}}>
+                                                    Hospital: {appointment[Object.keys(appointment)][0]['hospital']}
+                                                </Typography>
+                                                <Typography variant="subtitle2" style={{color: "#555555", marginBottom: "0.3rem"}}>
+                                                    Complaints: {appointment[Object.keys(appointment)][0]['complaints']}
+                                                </Typography>
+                                                <Typography variant="subtitle2" style={{color: "#555555", marginBottom: "0.3rem"}}>
+                                                    Pre-diagnosis: {appointment[Object.keys(appointment)][0]['diagnosis']}
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
                                     </Paper>
                                 </Grid>
-                                <Grid container item xs={12}>
-                                    <Button
-                                        type="button"
-                                        fullWidth="false"
-                                        variant="contained"
-                                        color="secondary"
-                                        size="medium"
-                                        className="view-prescription"
-                                        onClick={handleClickOpen}
-                                    >View</Button>
-                                    <Dialog open={open} onClose={handleClose} aria-labelledby="contact" TransitionComponent={Transition} keepMounted>
-                                        <DialogTitle id="prescription-box-title">Prescription</DialogTitle>
-                                        <DialogContent>
-                                            <DialogContentText>
+                                <Grid container item xs={2} spacing={3}>
+                                    <Grid container item xs={12}>
+                                        <Paper style={{width: "20rem", padding: "0.5rem"}}>
+                                            <DateRangeIcon />
+                                            <Typography variant="h6">{Object.keys(appointment)}</Typography>
+                                        </Paper>
+                                    </Grid>
+                                    <Grid container item xs={12}>
+                                        <Button
+                                            type="button"
+                                            fullWidth="false"
+                                            variant="contained"
+                                            color="secondary"
+                                            size="medium"
+                                            className="view-prescription"
+                                            onClick={handleClickOpen}
+                                        >View</Button>
+                                        <Dialog open={open} onClose={handleClose} aria-labelledby="contact" TransitionComponent={Transition} keepMounted>
+                                            <DialogTitle id="prescription-box-title">Prescription</DialogTitle>
+                                            <DialogContent>
+                                                <DialogContentText>
+                                                    
+                                                </DialogContentText>
                                                 
-                                            </DialogContentText>
-                                            
-                                        </DialogContent>
-                                        <DialogActions>
-                                            <Button onClick={handleClose} color="secondary">
-                                                Close
-                                            </Button>
-                                            <Button onClick={handleClose} color="secondary">
-                                                Download
-                                            </Button>
-                                        </DialogActions>
-                                    </Dialog>
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button onClick={handleClose} color="secondary">
+                                                    Close
+                                                </Button>
+                                                <Button onClick={handleClose} color="secondary">
+                                                    Download
+                                                </Button>
+                                            </DialogActions>
+                                        </Dialog>
+                                    </Grid>
+                                    <Grid item xs={12}></Grid>
                                 </Grid>
-                                <Grid item xs={12}></Grid>
                             </Grid>
-                        </Grid>
-                    </div>
-                ))}
+                        </div>
+                    ))}
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
+    else{
+        return(
+            <div>
+
+            </div>
+        )
+    }
+    
 }

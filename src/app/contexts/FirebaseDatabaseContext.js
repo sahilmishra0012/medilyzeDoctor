@@ -15,7 +15,25 @@ export const generateOTP = async (value, rand) => {
     }
 }
 
-export const deleteOtp = async (value, rand) => {
+export const getAppointments = async (value) =>{
+    const pidRef = db.collection('patientIDUID').doc(value.trim());
+    const uidDoc = await pidRef.get()
+    if (uidDoc.exists) {
+        let data = uidDoc.data()['uid'];
+        let name = await rdbms.ref('prescription/' + data).once("value", snapshot => {            
+        }
+        );
+        console.log(name.val())
+        return name.val().reverse();
+
+    }
+    else {
+        console.log("No such patient!");
+        return -999;
+    }
+}
+
+export const deleteOtp = async (value) => {
     const pidRef = db.collection('patientIDUID').doc(value.trim());
     const uidDoc = await pidRef.get()
     if (uidDoc.exists) {
