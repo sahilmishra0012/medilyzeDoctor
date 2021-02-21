@@ -85,7 +85,6 @@ export default function DashboardPatient() {
 
     useEffect(() => {
         async function fetchData() {
-            const UID = getUID();
             const name = await getDob(location.state.pid);
             setDob(name)
         }
