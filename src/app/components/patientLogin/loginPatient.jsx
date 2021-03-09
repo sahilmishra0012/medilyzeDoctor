@@ -10,7 +10,7 @@ import Alert from '@material-ui/lab/Alert';
 import logo from "../../../images/logo.png"
 import containerImage from "../../../images/7882.png"
 import { useAuth } from "../../contexts/AuthContext";
-import { fetchPatientData, fetchDoctorName } from "../../contexts/FirestoreContext";
+import { fetchDoctorName } from "../../contexts/FirestoreContext";
 import { generateOTP, deleteOtp } from "../../contexts/FirebaseDatabaseContext";
 
 
@@ -56,14 +56,14 @@ export default function LoginPatient() {
         try {
             setError("")
             setLoading(true)
-            if (otp == otpRef.current.value && otp.length!=0 && otpRef.current.value.length!=0) {
+            if (otp == otpRef.current.value && otp.length != 0 && otpRef.current.value.length != 0) {
                 await deleteOtp(uidRef.current.value);
                 history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
             }
             else {
                 setError("Incorrect OTP");
             }
-        } catch (e){
+        } catch (e) {
             console.log(e);
             setError("Failed to log in")
         }
