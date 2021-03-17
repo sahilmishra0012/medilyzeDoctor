@@ -10,8 +10,8 @@ import Alert from '@material-ui/lab/Alert';
 import logo from "../../../images/logo.png"
 import containerImage from "../../../images/7882.png"
 import { useAuth } from "../../contexts/AuthContext";
-import { fetchPatientData, fetchDoctorName } from "../../contexts/FirestoreContext";
-import { generateOTP } from "../../contexts/FirebaseDatabaseContext";
+import { fetchDoctorName } from "../../contexts/FirestoreContext";
+import { generateOTP, deleteOtp } from "../../contexts/FirebaseDatabaseContext";
 
 
 import { useHistory } from "react-router-dom";
@@ -24,6 +24,7 @@ export default function LoginPatient() {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const [doctorName, setDoctorName] = useState("")
+    const [otp, setOtp] = useState("");
     const history = useHistory()
 
     useEffect(() => {
@@ -35,13 +36,14 @@ export default function LoginPatient() {
         fetchData();
     }, [doctorName])
 
-    async function handleSubmit(e) {
+    async function handleOTPSend(e) {
         e.preventDefault()
         try {
             setError("")
             setLoading(true)
-            // await fetchPatientData(uidRef.current.value)
-            history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
+            const rand = Math.floor(100000 + Math.random() * 900000);
+            generateOTP(uidRef.current.value, rand)
+            setOtp(rand);
         } catch {
             setError("Failed to log in")
         }
@@ -52,6 +54,27 @@ export default function LoginPatient() {
     async function handleOTPSend() {
         
     }
+    async function handleSubmit(e) {
+        e.preventDefault()
+        try {
+            setError("")
+            setLoading(true)
+            if (otp == otpRef.current.value && otp.length != 0 && otpRef.current.value.length != 0) {
+                await deleteOtp(uidRef.current.value);
+                history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
+            }
+            else {
+                setError("Incorrect OTP");
+            }
+        } catch (e) {
+            console.log(e);
+            setError("Failed to log in")
+        }
+
+        setLoading(false)
+    }
+
+
 
     async function handleLogout() {
         setError("")

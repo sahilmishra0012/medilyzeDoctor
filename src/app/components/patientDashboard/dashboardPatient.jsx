@@ -83,7 +83,6 @@ export default function DashboardPatient() {
 
     useEffect(() => {
         async function fetchData() {
-            const UID = getUID();
             const name = await getDob(location.state.pid);
             setDob(name)
         }
@@ -270,7 +269,7 @@ export default function DashboardPatient() {
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
-                        <AppointmentHistory />
+                        <AppointmentHistory pid = {location.state.pid}/>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         <NewPrescription />
