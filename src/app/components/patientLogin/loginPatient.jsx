@@ -35,7 +35,7 @@ export default function LoginPatient() {
         fetchData();
     }, [doctorName])
 
-    async function handleSubmit1(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
         try {
             setError("")
@@ -49,7 +49,9 @@ export default function LoginPatient() {
         setLoading(false)
     }
 
-
+    async function handleOTPSend() {
+        
+    }
 
     async function handleLogout() {
         setError("")
@@ -89,7 +91,7 @@ export default function LoginPatient() {
                     <Grid container spacing={2}>
                         <Grid item xs={9}>
                             <TextField
-                                variant="outlined"
+                                variant="filled"
                                 required
                                 fullWidth
                                 id="uid"
@@ -114,7 +116,7 @@ export default function LoginPatient() {
                         </Grid>
                         <Grid item xs={9}>
                             <TextField
-                                variant="outlined"
+                                variant="filled"
                                 required
                                 fullWidth
                                 id="otp"

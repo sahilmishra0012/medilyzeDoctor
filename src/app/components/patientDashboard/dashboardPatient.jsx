@@ -23,10 +23,8 @@ import NavbarImage from '../../../images/navbarImage.png';
 import { fetchPatientData, fetchDoctorName, getDob } from "../../contexts/FirestoreContext";
 import { Icon, InlineIcon } from '@iconify/react';
 import genderMaleFemale from '@iconify-icons/mdi/gender-male-female';
-import Prescription from './tabComponents/prescription';
 import AppointmentHistory from './tabComponents/appointmentHistory';
-
-
+import NewPrescription from './tabComponents/newPrescription';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -257,10 +255,10 @@ export default function DashboardPatient() {
                         <DialogActions>
                             <Button onClick={handleClose} color="secondary">
                                 Cancel
-                        </Button>
+                            </Button>
                             <Button onClick={handleClose} color="secondary">
                                 Send
-                        </Button>
+                            </Button>
                         </DialogActions>
                     </Dialog>
                 </div>
@@ -268,14 +266,14 @@ export default function DashboardPatient() {
                     <AppBar position="static">
                         <Tabs value={value} onChange={handleChange} aria-label="patient-medical-details" style={{ backgroundColor: "#1990EA" }}>
                             <Tab label="Appointment History and Prescription" {...a11yProps(0)} />
-                            <Tab label="Billing" {...a11yProps(1)} />
+                            <Tab label="Write Prescription" {...a11yProps(1)} />
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
                         <AppointmentHistory />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        {/* <Billing /> */}
+                        <NewPrescription />
                     </TabPanel>
                 </div>
             </div>
