@@ -15,3 +15,17 @@
     width: 27rem;
     height: 8.5rem;
 }
+
+.add-prescription-container {
+    border: 2px solid rgb(189, 189, 189);
+    padding: 3rem;
+}
+
+.medicine-table-headings {
+    background-color: rgb(209, 209, 209);
+    padding: 0.5rem;
+}
+
+.medicine-table {
+    padding: 0.5rem;
+}

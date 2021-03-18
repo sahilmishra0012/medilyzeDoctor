@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './tabComponents.css';
+import Prescription from './prescription';
 import { Button, Grid, Paper, Typography } from '@material-ui/core';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,6 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import { PDFViewer } from '@react-pdf/renderer';
 import { getAppointments } from "../../../contexts/FirebaseDatabaseContext";
 
 
