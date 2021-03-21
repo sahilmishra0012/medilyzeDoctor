@@ -106,20 +106,14 @@ export default function AppointmentHistory(props) {
                                             className="view-prescription"
                                             onClick={handleClickOpen}
                                         >View</Button>
-                                        <Dialog open={open} onClose={handleClose} aria-labelledby="contact" TransitionComponent={Transition} keepMounted>
+                                        <Dialog open={open} onClose={handleClose} aria-labelledby="contact" maxWidth="lg" TransitionComponent={Transition} keepMounted>
                                             <DialogTitle id="prescription-box-title">Prescription</DialogTitle>
                                             <DialogContent>
-                                                <DialogContentText>
-                                                    
-                                                </DialogContentText>
-                                                
+                                                <Prescription />
                                             </DialogContent>
                                             <DialogActions>
                                                 <Button onClick={handleClose} color="secondary">
                                                     Close
-                                                </Button>
-                                                <Button onClick={handleClose} color="secondary">
-                                                    Download
                                                 </Button>
                                             </DialogActions>
                                         </Dialog>
