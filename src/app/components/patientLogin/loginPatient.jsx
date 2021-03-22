@@ -51,9 +51,6 @@ export default function LoginPatient() {
         setLoading(false)
     }
 
-    async function handleOTPSend() {
-        
-    }
     async function handleSubmit(e) {
         e.preventDefault()
         try {
