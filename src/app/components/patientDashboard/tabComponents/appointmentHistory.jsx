@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './tabComponents.css';
 import Prescription from './prescription';
 import { Button, Grid, Paper, Typography } from '@material-ui/core';
@@ -43,10 +43,10 @@ export default function AppointmentHistory(props) {
         doctorSpecialization: "Cardiologist",
         status: "Admitted for 5 days"
     }]; //assign list from backend here
-    if(appointmentHistory){
+    if (appointmentHistory) {
         return (
             <div className="appointment-history-content">
-                <Typography variant="h4" style={{color: "#1991EB"}}>
+                <Typography variant="h4" style={{ color: "#1991EB" }}>
                     Appointment History
                 </Typography>
                 <Typography variant="subtitle2">
@@ -63,26 +63,26 @@ export default function AppointmentHistory(props) {
                                         </Typography>
                                     </Grid>
                                     <Grid container item>
-                                        <Typography variant="h6" style={{color: "#1991EB"}}>
-                                        {appointment[Object.keys(appointment)][0]['doctorID']}
+                                        <Typography variant="h6" style={{ color: "#1991EB" }}>
+                                            {appointment[Object.keys(appointment)][0]['doctorID']}
                                         </Typography>
                                     </Grid>
                                 </Grid>
                                 <Grid container item xs={8}>
                                     <Paper elevation={2} className="appointment-doctor-details">
                                         <Grid container spacing={1}>
-                                            
+
                                             <Grid item xs={10}>
                                                 <Typography variant="h6">
                                                     {appointment[Object.keys(appointment)][0]['doctor']}
                                                 </Typography>
-                                                <Typography variant="subtitle1" style={{color: "#333333", marginBottom: "0.3rem"}}>
+                                                <Typography variant="subtitle1" style={{ color: "#333333", marginBottom: "0.3rem" }}>
                                                     Hospital: {appointment[Object.keys(appointment)][0]['hospital']}
                                                 </Typography>
-                                                <Typography variant="subtitle2" style={{color: "#555555", marginBottom: "0.3rem"}}>
+                                                <Typography variant="subtitle2" style={{ color: "#555555", marginBottom: "0.3rem" }}>
                                                     Complaints: {appointment[Object.keys(appointment)][0]['complaints']}
                                                 </Typography>
-                                                <Typography variant="subtitle2" style={{color: "#555555", marginBottom: "0.3rem"}}>
+                                                <Typography variant="subtitle2" style={{ color: "#555555", marginBottom: "0.3rem" }}>
                                                     Pre-diagnosis: {appointment[Object.keys(appointment)][0]['diagnosis']}
                                                 </Typography>
                                             </Grid>
@@ -91,7 +91,7 @@ export default function AppointmentHistory(props) {
                                 </Grid>
                                 <Grid container item xs={2} spacing={3}>
                                     <Grid container item xs={12}>
-                                        <Paper style={{width: "20rem", padding: "0.5rem"}}>
+                                        <Paper style={{ width: "20rem", padding: "0.5rem" }}>
                                             <DateRangeIcon />
                                             <Typography variant="h6">{Object.keys(appointment)}</Typography>
                                         </Paper>
@@ -109,7 +109,7 @@ export default function AppointmentHistory(props) {
                                         <Dialog open={open} onClose={handleClose} aria-labelledby="contact" maxWidth="lg" TransitionComponent={Transition} keepMounted>
                                             <DialogTitle id="prescription-box-title">Prescription</DialogTitle>
                                             <DialogContent>
-                                                <Prescription />
+                                                <Prescription data={appointment[Object.keys(appointment)][0]} patientData={props.data} />
                                             </DialogContent>
                                             <DialogActions>
                                                 <Button onClick={handleClose} color="secondary">
@@ -127,12 +127,12 @@ export default function AppointmentHistory(props) {
             </div>
         )
     }
-    else{
-        return(
+    else {
+        return (
             <div>
 
             </div>
         )
     }
-    
+
 }
