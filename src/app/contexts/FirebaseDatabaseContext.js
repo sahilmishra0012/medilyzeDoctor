@@ -23,7 +23,6 @@ export const getAppointments = async (value) =>{
         let name = await rdbms.ref('prescription/' + data).once("value", snapshot => {            
         }
         );
-        console.log(name.val())
         return name.val().reverse();
 
     }
