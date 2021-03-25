@@ -109,7 +109,7 @@ export default function AppointmentHistory(props) {
                                         <Dialog open={open} onClose={handleClose} aria-labelledby="contact" maxWidth="lg" TransitionComponent={Transition} keepMounted>
                                             <DialogTitle id="prescription-box-title">Prescription</DialogTitle>
                                             <DialogContent>
-                                                <Prescription data={appointment[Object.keys(appointment)][0]} patientData={props.data} />
+                                                <Prescription data={appointment[Object.keys(appointment)][0]} patientData={props.data} dob={props.dob} date={Object.keys(appointment)} />
                                             </DialogContent>
                                             <DialogActions>
                                                 <Button onClick={handleClose} color="secondary">
