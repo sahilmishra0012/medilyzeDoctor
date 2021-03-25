@@ -173,7 +173,7 @@ export default function DashboardPatient() {
                 <div className="personal-details">
                     <div className="patient-image">
                         <img alt=""
-                            src={patientData.photo} style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+                            src={patientData.imageUrl} style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
                     </div>
                     <Grid container spacing={1} style={{ width: "40rem", margin: "1.5rem", display: "inline-flex" }}>
                         <Grid container item xs={6}>
@@ -269,7 +269,7 @@ export default function DashboardPatient() {
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
-                        <AppointmentHistory pid={location.state.pid} data={patientData} />
+                        <AppointmentHistory pid={location.state.pid} data={patientData} dob={dob} />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         <NewPrescription />
