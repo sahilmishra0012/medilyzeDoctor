@@ -46,6 +46,10 @@ export default function LoginDoctor() {
                 console.log("User does not exist");
                 setError("User does not exist");
             }
+            else if (e.code === 'auth/user-not-found') {
+                console.log("User does not exist");
+                setError("User does not exist");
+            }
         }
 
         setLoading(false)
