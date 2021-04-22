@@ -15,6 +15,18 @@ export const fetchDoctorName = async (value) => {
     }
 }
 
+export const checkUser = async (value) => {
+    const uidRef = db.collection('doctors').doc(value);
+    const doc = await uidRef.get()
+    if (doc.exists) {
+        return "registered-doctor";
+    }
+    else {
+        return "not-registered";
+
+    }
+}
+
 export const fetchPatientData = async (value) => {
     const pidRef = db.collection('patientIDUID').doc(value.trim());
     const uidDoc = await pidRef.get()

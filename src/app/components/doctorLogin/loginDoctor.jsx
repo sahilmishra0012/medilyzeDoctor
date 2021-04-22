@@ -10,11 +10,12 @@ import Snackbar from '@material-ui/core/Snackbar';
 import logo from "../../../images/logo.png";
 import containerImage from "../../../images/Group 1.png";
 import { Link, useHistory } from "react-router-dom";
+import { checkUser } from "../../contexts/FirestoreContext";
 
 export default function LoginDoctor() {
     const emailRef = useRef()
     const passwordRef = useRef()
-    const { login, resetPassword } = useAuth()
+    const { login, resetPassword, logout, getUID } = useAuth()
     const [error, setError] = useState("")
     const [reset, setReset] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -27,7 +28,15 @@ export default function LoginDoctor() {
             setError("")
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
-            history.push("/patientSearch")
+            const UID = getUID();
+            const status = await checkUser(UID)
+            if (status == 'registered-doctor') {
+                history.push("/patientSearch")
+            }
+            else {
+                setError("User not permitted to login");
+                logout()
+            }
         } catch (e) {
             if (e.code === 'auth/wrong-password') {
                 console.log("Password is incorrect");
