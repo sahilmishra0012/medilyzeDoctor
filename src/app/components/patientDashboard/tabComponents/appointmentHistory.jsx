@@ -12,8 +12,6 @@ import Slide from '@material-ui/core/Slide';
 import { PDFViewer } from '@react-pdf/renderer';
 import { getAppointments } from "../../../contexts/FirebaseDatabaseContext";
 
-
-
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });

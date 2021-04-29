@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './tabComponents.css';
 import LogoImg from '../../../../images/logo.png';
 import CallImg from '../../../../images/call.png';
 import MailImg from '../../../../images/mail.png';
 import { Page, Text, Image, View, Document, StyleSheet, PDFViewer } from '@react-pdf/renderer';
 
-export default function Prescription(props) {
+const Prescription = (props) => {
+    const [prescriptionData, setPrescriptionData] = useState(props);
+
+    useMemo (() => {
+        setPrescriptionData(props);
+    }, []);
+
     return (
         <PDFViewer style={{ width: "50rem", height: "25rem" }}>
             <Document>
                 <Page size="A4" style={{ flexDirection: 'column', padding: '50 0' }}>
                     <View style={{ padding: "30 60", backgroundColor: "#4dabf6", color: "white", flexDirection: "row" }}>
                         <View style={{ marginRight: "180" }}>
-                            <Text style={{ fontSize: "20" }}>{props.data['hospital']}</Text>
+                            <Text style={{ fontSize: "20" }}>{prescriptionData?.data?.hospital}</Text>
                             <Text style={{ fontSize: "12", margin: "8 0 1 0" }}>[Parathe wali gali, Delhi 6, India]</Text>
                             <Text style={{ fontSize: "12", margin: "1" }}>[phalanadhimkana@medilyze.com]</Text>
                         </View>
@@ -67,4 +73,7 @@ export default function Prescription(props) {
             </Document>
         </PDFViewer>
     )
+// }, (prevProps, nextProps) => prevProps.show === nextProps.show);
 }
+
+export default Prescription;
