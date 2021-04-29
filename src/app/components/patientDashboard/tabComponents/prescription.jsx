@@ -6,7 +6,7 @@ import MailImg from '../../../../images/mail.png';
 import { Page, Text, Image, View, Document, StyleSheet, PDFViewer } from '@react-pdf/renderer';
 
 const Prescription = (props) => {
-    const [prescriptionData, setPrescriptionData] = useState(props);
+    const [prescriptionData, setPrescriptionData] = useState();
 
     useMemo (() => {
         setPrescriptionData(props);
