@@ -43,6 +43,7 @@
   background-color: #ffffff;
   border: 0.7rem solid #bfdbf1;
   color: #555555;
+  min-height: 30rem;
 }
 
 .patient-image {
