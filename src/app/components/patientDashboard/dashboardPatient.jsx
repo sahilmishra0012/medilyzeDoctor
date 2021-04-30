@@ -272,7 +272,7 @@ export default function DashboardPatient() {
                         <AppointmentHistory pid={location.state.pid} data={patientData} dob={dob} />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        <NewPrescription />
+                        <NewPrescription pid={location.state.pid}/>
                     </TabPanel>
                 </div>
             </div>
