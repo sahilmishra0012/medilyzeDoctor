@@ -1,79 +1,204 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import './tabComponents.css';
 import LogoImg from '../../../../images/logo.png';
-import CallImg from '../../../../images/call.png';
+import Rx from '../../../../images/rx.png';
 import MailImg from '../../../../images/mail.png';
 import { Page, Text, Image, View, Document, StyleSheet, PDFViewer } from '@react-pdf/renderer';
-
+import { Typography } from "@material-ui/core";
 const Prescription = (props) => {
     const [prescriptionData, setPrescriptionData] = useState();
+    const [reports, setReports] = useState(prescriptionData?.data?.Reports);
 
-    useMemo (() => {
+    console.log(prescriptionData?.data?.Reports)
+    useMemo(() => {
         setPrescriptionData(props);
     }, []);
 
-    return (
-        <PDFViewer style={{width: "50rem", height: "25rem"}}>
-            <Document>
-                <Page size="A4" style={{ flexDirection: 'column', padding: '50 0' }}>
-                    <View style={{ padding: "30 60", backgroundColor: "#4dabf6", color: "white", flexDirection: "row" }}>
-                        <View style={{ marginRight: "180" }}>
-                            <Text style={{ fontSize: "20" }}>{prescriptionData?.data?.hospital}</Text>
-                            <Text style={{ fontSize: "12", margin: "8 0 1 0" }}>[Parathe wali gali, Delhi 6, India]</Text>
-                            <Text style={{ fontSize: "12", margin: "1" }}>[phalanadhimkana@medilyze.com]</Text>
-                        </View>
-                        <Image source={LogoImg} style={{width: "60", height: "60"}} />
-                    </View>
-                    <View style={{padding: '60', fontSize: "12"}}>
-                        <View style={{border: "1 solid #b6b6b6", width: "100%"}} />
-                        <View style={{padding: "7", flexDirection: "row"}}>
-                            <View style={{marginRight: "70"}}>
-                                <Text style={{color: "#4dabf6"}}>Dr. Tohmmat Muradabadi, Hakeem</Text>
-                                <Text style={{margin: "10 0"}}>[Medical Physician]</Text>
-                                <Text>[(+91)9876543210]</Text>
-                            </View>
-                            <View style={{marginLeft: "70"}}>
-                                <Text>Prescription no: [1234567]</Text>
-                                <Text style={{margin: "10 0 10 50"}}>Date: 30/02/2300</Text>
-                            </View>
-                        </View>
-                        <View style={{border: "1 solid #b6b6b6", width: "100%"}} />
-                        <View style={{margin: "60 0 15 0"}}>
-                            <Text>[Paracetamol, 500mg, once a day]</Text>
-                            <Text style={{margin: "12 0 0 0"}}>Sher churan, 1 packet, khane ke baad</Text>
-                        </View>
-                        <View style={{margin: "15 0 60 0"}}>
-                            <Text>Blood Test</Text>
-                            <Text style={{margin: "12 0 0 0"}}>ECG</Text>
-                        </View>
-                        <View style={{flexDirection: "row"}}>
-                            <View style={{color: "#4dabf6", marginRight: "25"}}>
-                                <Text>Mr./Ms./Mrs.</Text>
-                                <Text style={{margin: "12 0 6 0"}}>Age</Text>
-                                <Text style={{margin: "6 0 12 0"}}>Address</Text>
-                                <Text>Contact Num.</Text>
-                            </View>
-                            <View>
-                            <View>
-                                <Text>Maamu Jalela</Text>
-                                <Text style={{margin: "12 0 6 0"}}>34</Text>
-                                <Text style={{margin: "6 0 12 0"}}>Footpath</Text>
-                                <Text>100</Text>
-                            </View>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={{padding: "10 60", marginTop: "70", backgroundColor: "#4dabf6", color: "white", flexDirection: "row", fontSize: "10"}}>
-                        <Image source={CallImg} style={{width: "12", height: "12", marginRight: "6"}} />
-                        <Text>(+91)7895647224</Text>
-                        <Image source={MailImg} style={{width: "12", height: "12", margin: "0 6 0 250"}} />
-                        <Text>Kuchbhi@medilyze.com</Text>
-                    </View>
-                </Page>
-            </Document>
-        </PDFViewer>
+
+    try {
+        return (
+            <div id="prescription" style={{ width: "50rem", height: "25rem" }}>
+                <div style={{ padding: "2%", width: "120", marginBottom: "3%", backgroundColor: "#4dabf6", color: "white" }}>
+                    <div style={{ display: "inline-block" }}>
+                        <div style={{ width: "70%", paddingTop: "2%", float: "left" }}>
+                            <Typography variant="h3">{prescriptionData?.data?.hospital}</Typography>
+                        </div>
+                        <div style={{ width: "20%", float: "right", paddingRight: "5%" }}>
+                            <img src={LogoImg} style={{ width: "70%" }} />
+                        </div>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div style={{ backgroundColor: "", float: "left", width: "50%" }}>
+                            <h4>Doctor: {prescriptionData?.data?.doctor}</h4>
+                        </div>
+                        <div style={{ backgroundColor: "", float: "right", width: "50%" }}>
+                            <h4>Prescription ID: {prescriptionData?.data?.prescription_id}</h4>
+                        </div>
+
+                    </div>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", paddingLeft: "5%" }}>
+                    <div style={{ backgroundColor: "", float: "left", width: "100%" }}>
+                        <p><b>Patient Information</b></p>
+                    </div>
+                    <div style={{ backgroundColor: "", float: "right", width: "30%" }}>
+                        <p>Date: {prescriptionData?.date}</p>
+                    </div>
+                </div>
+                <hr style={{ width: "90%", height: "2px", color: "gray", backgroundColor: "gray" }} />
+                <div style={{ display: "flex", justifyContent: "space-between", paddingLeft: "5%" }}>
+                    <div style={{ backgroundColor: "", float: "left", width: "50%" }}>
+                        <p>Name: {prescriptionData?.patientData?.firstName + " " + prescriptionData?.patientData?.middleName + " " + prescriptionData?.patientData?.lastName}</p>
+                    </div>
+                    <div style={{ backgroundColor: "", float: "right", width: "50%" }}>
+                        <p>Date of Birth: {prescriptionData?.dob}</p>
+                        <p>Blood Group: {prescriptionData?.patientData?.blood_group}</p>
+                    </div>
+                </div>
+                <hr style={{ width: "90%", height: "2px", color: "gray", backgroundColor: "gray" }} />
+                <div style={{ paddingLeft: "5%" }}>
+                    <p><b>Complaints:</b> {prescriptionData?.data?.complaints}</p>
+                </div>
+                <div style={{ paddingLeft: "5%" }}>
+                    <p><b>Diagnosis:</b> {prescriptionData?.data?.diagnosis}</p>
+                </div>
+                <div style={{ paddingLeft: "5%", marginTop: "10%" }}>
+                    <img src={Rx} style={{ width: "5%" }} />
+                </div>
+                <div style={{ width: "100%", paddingLeft: "5%" }}>
+                    <table style={{ width: "100%" }}>
+                        <tr>
+                            <th style={{ textAlign: "left" }}>Medicine</th>
+                            <th style={{ textAlign: "left" }}>Dosage</th>
+                            <th style={{ textAlign: "left" }}>Timing-Duration</th>
+                        </tr>
+                        {prescriptionData?.data.Medicines.map((medicine) => (
+                            <tr>
+                                <td>{medicine.split(" ").slice(0, [medicine.split(" ").length - 2]).join(" ")}</td>
+                                <td>{medicine.split(" ")[medicine.split(" ").length - 2]}</td>
+                                <td>{medicine.split(" ")[medicine.split(" ").length - 1]}</td>
+                            </tr>
+                        ))}
+                    </table>
+                </div>
+                <div style={{ paddingLeft: "5%", marginTop: "5%" }}>
+                    <h3>Tests</h3>
+                </div>
+                <div style={{ paddingLeft: "5%" }}>
+                    <ol>
+                        {prescriptionData?.data.Tests.map((test, index) => (                      
+                            <li><a style={{ color: "black" }} target="_blank" href="">{test}</a></li>
+                        ))}
+                    </ol>
+                </div>
+                <div style={{ paddingLeft: "5%", marginTop: "5%" }}>
+                    <p><b>Next Visit: </b>{prescriptionData?.data.next_visit}</p>
+                </div>
+                <div style={{ marginTop: "5%", padding: "0.5%", width: "150", marginBottom: "3%", backgroundColor: "#4dabf6", color: "white" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div style={{ paddingLeft: "2%", backgroundColor: "", float: "left", width: "120%" }}>
+                            <h4>7007059528</h4>
+                        </div>
+                        <div style={{ backgroundColor: "", float: "right", width: "50%" }}>
+                            <h4>medilyze.sup@gmail.com</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
     )
-// }, (prevProps, nextProps) => prevProps.show === nextProps.show);
+    } catch (e) {
+        return (
+            <div id="prescription" style={{ width: "50rem", height: "25rem" }}>
+                <div style={{ padding: "2%", width: "120", marginBottom: "3%", backgroundColor: "#4dabf6", color: "white" }}>
+                    <div style={{ display: "inline-block" }}>
+                        <div style={{ width: "70%", paddingTop: "2%", float: "left" }}>
+                            <Typography variant="h3">{prescriptionData?.data?.hospital}</Typography>
+                        </div>
+                        <div style={{ width: "20%", float: "right", paddingRight: "5%" }}>
+                            <img src={LogoImg} style={{ width: "70%" }} />
+                        </div>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div style={{ backgroundColor: "", float: "left", width: "50%" }}>
+                            <h4>Doctor: {prescriptionData?.data?.doctor}</h4>
+                        </div>
+                        <div style={{ backgroundColor: "", float: "right", width: "50%" }}>
+                            <h4>Prescription ID: {prescriptionData?.data?.prescription_id}</h4>
+                        </div>
+
+                    </div>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", paddingLeft: "5%" }}>
+                    <div style={{ backgroundColor: "", float: "left", width: "100%" }}>
+                        <p><b>Patient Information</b></p>
+                    </div>
+                    <div style={{ backgroundColor: "", float: "right", width: "30%" }}>
+                        <p>Date: {prescriptionData?.date}</p>
+                    </div>
+                </div>
+                <hr style={{ width: "90%", height: "2px", color: "gray", backgroundColor: "gray" }} />
+                <div style={{ display: "flex", justifyContent: "space-between", paddingLeft: "5%" }}>
+                    <div style={{ backgroundColor: "", float: "left", width: "50%" }}>
+                        <p>Name: {prescriptionData?.patientData?.firstName + " " + prescriptionData?.patientData?.middleName + " " + prescriptionData?.patientData?.lastName}</p>
+                    </div>
+                    <div style={{ backgroundColor: "", float: "right", width: "50%" }}>
+                        <p>Date of Birth: {prescriptionData?.dob}</p>
+                        <p>Blood Group: {prescriptionData?.patientData?.blood_group}</p>
+                    </div>
+                </div>
+                <hr style={{ width: "90%", height: "2px", color: "gray", backgroundColor: "gray" }} />
+                <div style={{ paddingLeft: "5%" }}>
+                    <p><b>Complaints:</b> {prescriptionData?.data?.complaints}</p>
+                </div>
+                <div style={{ paddingLeft: "5%" }}>
+                    <p><b>Diagnosis:</b> {prescriptionData?.data?.diagnosis}</p>
+                </div>
+                <div style={{ paddingLeft: "5%", marginTop: "10%" }}>
+                    <img src={Rx} style={{ width: "5%" }} />
+                </div>
+                <div style={{ width: "100%", paddingLeft: "5%" }}>
+                    <table style={{ width: "100%" }}>
+                        <tr>
+                            <th style={{ textAlign: "left" }}>Medicine</th>
+                            <th style={{ textAlign: "left" }}>Dosage</th>
+                            <th style={{ textAlign: "left" }}>Timing-Duration</th>
+                        </tr>
+                        {prescriptionData?.data.Medicines.map((medicine) => (
+                            <tr>
+                                <td>{medicine.split(" ").slice(0, [medicine.split(" ").length - 2]).join(" ")}</td>
+                                <td>{medicine.split(" ")[medicine.split(" ").length - 2]}</td>
+                                <td>{medicine.split(" ")[medicine.split(" ").length - 1]}</td>
+                            </tr>
+                        ))}
+                    </table>
+                </div>
+                <div style={{ paddingLeft: "5%", marginTop: "5%" }}>
+                    <h3>Tests</h3>
+                </div>
+                <div style={{ paddingLeft: "5%" }}>
+                    <ol>
+                        {prescriptionData?.data.Tests.map((test, index) => (
+                            console.log(prescriptionData?.data.Reports[index]['url']),
+                            <li><a style={{ color: "black" }} target="_blank" href={prescriptionData?.data.Reports[index]['url']}>{test}</a></li>
+                        ))}
+                    </ol>
+                </div>
+                <div style={{ paddingLeft: "5%", marginTop: "5%" }}>
+                    <p><b>Next Visit: </b>{prescriptionData?.data.next_visit}</p>
+                </div>
+                <div style={{ marginTop: "5%", padding: "0.5%", width: "150", marginBottom: "3%", backgroundColor: "#4dabf6", color: "white" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div style={{ paddingLeft: "2%", backgroundColor: "", float: "left", width: "120%" }}>
+                            <h4>7007059528</h4>
+                        </div>
+                        <div style={{ backgroundColor: "", float: "right", width: "50%" }}>
+                            <h4>medilyze.sup@gmail.com</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    )
+    }
 }
 
 export default Prescription;
