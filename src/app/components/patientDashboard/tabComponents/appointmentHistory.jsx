@@ -11,6 +11,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { PDFViewer } from '@react-pdf/renderer';
 import { getAppointments } from "../../../contexts/FirebaseDatabaseContext";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -27,7 +29,7 @@ function AppointmentRow(props) {
     const handleClose = () => {
         setOpen(false);
     };
-    
+
     return (
         <div className="appointment-list-content">
             <Grid container spacing={0}>
@@ -87,12 +89,37 @@ function AppointmentRow(props) {
                                 <Prescription data={appointment[Object.keys(appointment)][0]} patientData={props.data} dob={props.dob} date={Object.keys(appointment)} />
                             </DialogContent>
                             <DialogActions>
+                                <Button onClick={() => {
+                                    function randomString(length, chars) {
+                                        var result = '';
+                                        for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+                                        return result;
+                                    }
+                                    var rString = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+                                    const input = document.getElementById('prescription');
+
+                                    html2canvas(input,  {scrollY:  (window.pageYOffset * -1), height: window.outerHeight + window.innerHeight,
+                                        windowHeight: window.outerHeight + window.innerHeight}).then(canvas => {
+                                        const imgData = canvas.toDataURL('image/png', 1);
+                                        const pdf = new jsPDF('p','mm', [350, 250]);
+                                        pdf.addImage(imgData, 'PNG', 8, -25);
+                                        setTimeout(function () {
+                                            pdf.save(rString+".pdf");
+                                        }, 5000)
+
+                                    });
+
+
+                                }} color="secondary">
+                                    Download
+                                </Button>
                                 <Button onClick={handleClose} color="secondary">
                                     Close
                                 </Button>
                             </DialogActions>
                         </Dialog>
                     </Grid>
+                    
                     <Grid item xs={12}></Grid>
                 </Grid>
             </Grid>
@@ -122,7 +149,7 @@ export default function AppointmentHistory(props) {
                 </Typography>
                 <div>
                     {appointmentHistory.map((appointment) => (
-                        <AppointmentRow appointmentData={appointment}/>
+                        <AppointmentRow appointmentData={appointment} data={props.data} dob={props.dob} />
                     ))}
                 </div>
             </div>
