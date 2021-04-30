@@ -15,6 +15,19 @@ export const fetchDoctorName = async (value) => {
     }
 }
 
+export const fetchDoctorData = async (value) => {
+    const uidRef = db.collection('doctors').doc(value);
+    const doc = await uidRef.get()
+    if (doc.exists) {
+        let data = doc.data();
+        return data;
+    }
+    else {
+        console.log("No such document!");
+        return -999;
+    }
+}
+
 export const checkUser = async (value) => {
     const uidRef = db.collection('doctors').doc(value);
     const doc = await uidRef.get()
