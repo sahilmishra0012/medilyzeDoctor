@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './tabComponents.css';
+import { Link, useHistory } from "react-router-dom";
+
 import Prescription from './prescription';
 import { Button, Grid, Paper, Typography } from '@material-ui/core';
 import DateRangeIcon from '@material-ui/icons/DateRange';
@@ -21,6 +23,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function AppointmentRow(props) {
     const [open, setOpen] = useState(false);
     const appointment = props.appointmentData;
+    const history = useHistory()
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -89,6 +92,9 @@ function AppointmentRow(props) {
                                 <Prescription data={appointment[Object.keys(appointment)][0]} patientData={props.data} dob={props.dob} date={Object.keys(appointment)} />
                             </DialogContent>
                             <DialogActions>
+                                <Button onClick={() => { history.push({ pathname: "/report", state: { data:appointment[Object.keys(appointment)][0], patientData:props.data, dob:props.dob, pid:props.pid, date:Object.keys(appointment) }})}} color="secondary">
+                                    Reports
+                                </Button>
                                 <Button onClick={() => {
                                     function randomString(length, chars) {
                                         var result = '';
@@ -149,7 +155,7 @@ export default function AppointmentHistory(props) {
                 </Typography>
                 <div>
                     {appointmentHistory.map((appointment) => (
-                        <AppointmentRow appointmentData={appointment} data={props.data} dob={props.dob} />
+                        <AppointmentRow appointmentData={appointment} data={props.data} dob={props.dob} pid={props.pid} />
                     ))}
                 </div>
             </div>
