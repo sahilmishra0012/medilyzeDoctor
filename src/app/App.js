@@ -9,6 +9,8 @@ import PrivateRoute from './components/privateRoute';
 import LoginDoctor from './components/doctorLogin/loginDoctor';
 import LoginPatient from './components/patientLogin/loginPatient';
 import DashboardPatient from './components/patientDashboard/dashboardPatient';
+import Reports from './components/patientDashboard/tabComponents/reports';
+
 import './App.css';
 
 
@@ -21,6 +23,7 @@ function App() {
             <PrivateRoute exact path="/patientProfile" component={DashboardPatient} />
             <PrivateRoute path="/patientSearch" component={LoginPatient} />
             <Route exact path="/" component={LoginDoctor} />
+            <Route exact path="/report" component={Reports} />
           </Switch>
         </AuthProvider>
       </Router> 
